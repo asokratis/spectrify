@@ -7,7 +7,7 @@ epoch = datetime.utcfromtimestamp(0)
 
 
 def timedelta_to_micros(td):
-    return (td.days * 86400 + td.seconds) * 10**6 + td.microseconds
+    return (td.days * 86400 + td.seconds) + td.microseconds
 
 
 def timedelta_to_nanos(td):
@@ -28,10 +28,28 @@ def iso8601_to_nanos(date_str):
         Return Values:
         int representing # of nanoseconds since "1970-01-01" for date
     """
-    dt = ciso8601.parse_datetime(date_str)
+    dt = None
+    counter = 0
+    for test_value in (date_str, "1970-01-01"):
+        try:
+            dt = ciso8601.parse_datetime(test_value)
+            break
+        except Exception:
+            if counter == 0:
+                counter += 1
+                continue  # Ignore the exception and try the next type.
     return unix_time_nanos(dt)
 
 
 def iso8601_to_days_since_epoch(date_str):
-    dt = ciso8601.parse_datetime(date_str)
+    dt = None
+    counter = 0
+    for test_value in (date_str, "1970-01-01"):
+        try:
+            dt = ciso8601.parse_datetime(test_value)
+            break
+        except Exception:
+            if counter == 0:
+                counter += 1
+                continue  # Ignore the exception and try the next type.
     return (dt - epoch).days
