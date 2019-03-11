@@ -5,12 +5,11 @@ import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import DOUBLE_PRECISION, TIMESTAMP
 
 
-def _pa_timestamp_ns():
+def _pa_timestamp_ms():
     """Wrapper function around Arrow's timestamp type function, which is the
     only type function that requires an argument...
     """
-    return pa.timestamp('ns')
-
+    return pa.timestamp('ms')
 
 class Writer:
     """Writes a Parquet file using Apache Arrow"""
@@ -32,9 +31,9 @@ class Writer:
         sa.types.NVARCHAR: pa.string,
         sa.types.CHAR: pa.string,
         sa.types.BOOLEAN: pa.bool_,
-        sa.types.TIMESTAMP: _pa_timestamp_ns,
+        sa.types.TIMESTAMP: _pa_timestamp_ms,
         sa.types.DATE: pa.date32,
-        TIMESTAMP: _pa_timestamp_ns,
+        TIMESTAMP: _pa_timestamp_ms,
     }
     supported_sa_types = set(pyarrow_type_map.keys()).union({sa.types.DECIMAL, sa.types.NUMERIC})
 
@@ -95,6 +94,6 @@ class Writer:
                 self.py_fd,
                 table.schema,
                 compression='gzip',
-                use_deprecated_int96_timestamps=True
+                use_deprecated_int96_timestamps=False
             )
         return self.writer
