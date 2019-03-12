@@ -7,17 +7,11 @@ epoch = datetime.utcfromtimestamp(0)
 
 
 def timedelta_to_micros(td):
-    return (td.days * 86400 + td.seconds) + td.microseconds
-
-
-def timedelta_to_nanos(td):
-    return timedelta_to_micros(td) * 1000
-
+    return ((td.days * 86400 + td.seconds) * 1000) + (td.microseconds/1000)
 
 def unix_time_nanos(dt):
     """Returns nanoseconds since epoch for a given datetime object"""
-    return timedelta_to_nanos(dt - epoch)
-
+    return timedelta_to_micros(dt - epoch)
 
 def iso8601_to_nanos(date_str):
     """ Returns a nanoseconds since epoch for a given ISO-8601 date string
@@ -54,4 +48,4 @@ def iso8601_to_days_since_epoch(date_str):
             if counter == 0:
                 counter += 1
                 continue  # Ignore the exception and try the next type.
-    return (dt - epoch).days
+    return ((dt - epoch).days * 86400 * 1000)
