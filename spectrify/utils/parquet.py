@@ -32,7 +32,7 @@ class Writer:
         sa.types.CHAR: pa.string,
         sa.types.BOOLEAN: pa.bool_,
         sa.types.TIMESTAMP: _pa_timestamp_ms,
-        sa.types.DATE: pa.date32,
+        sa.types.DATE: pa.date64,
         TIMESTAMP: _pa_timestamp_ms,
     }
     supported_sa_types = set(pyarrow_type_map.keys()).union({sa.types.DECIMAL, sa.types.NUMERIC})
