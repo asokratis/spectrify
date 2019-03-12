@@ -7,7 +7,7 @@ epoch = datetime.utcfromtimestamp(0)
 
 
 def timedelta_to_micros(td):
-    return ((td.days * 86400 + td.seconds) * 1000) + (td.microseconds/1000)
+    return ((td.days * 86400 + td.seconds) * 1000) + int(td.microseconds/1000)
 
 def unix_time_nanos(dt):
     """Returns nanoseconds since epoch for a given datetime object"""
