@@ -34,7 +34,8 @@ def iso8601_to_nanos(date_str):
         try:
             dt = ciso8601.parse_datetime(test_value)
             break
-        except Exception:
+        except Exception as e:
+            print(str(e) + " - Defaulting " + str(date_str) + " to 1970-01-01")
             if counter == 0:
                 counter += 1
                 continue  # Ignore the exception and try the next type.
@@ -48,7 +49,8 @@ def iso8601_to_days_since_epoch(date_str):
         try:
             dt = ciso8601.parse_datetime(test_value)
             break
-        except Exception:
+        except Exception as e:
+            print(str(e) + " - Defaulting " + str(date_str) + " to 1970-01-01")
             if counter == 0:
                 counter += 1
                 continue  # Ignore the exception and try the next type.
